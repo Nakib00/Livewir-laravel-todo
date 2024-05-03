@@ -9,7 +9,6 @@ use Livewire\WithPagination;
 
 class Todolist extends Component
 {
-
     use WithPagination;
 
     // validation rule

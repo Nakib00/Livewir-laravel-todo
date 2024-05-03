@@ -16,3 +16,7 @@ Route::get('/contact', function () {
 Route::get('/todoapp', function () {
     return view('todoapp');
 })->name('todoapp');
+
+Route::get('/user', function () {
+    return view('user');
+})->name('user');

@@ -4,7 +4,7 @@
 
 <body>
     @include('include.nap')
-        @yield('container')
+    @yield('container')
     @include('include.footer')
 </body>
 
