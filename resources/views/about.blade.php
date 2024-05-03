@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('container')
-    <div class="container">
-        <h1>About page</h1>
+    <div id="content" class="mx-auto" style="max-width:12000px;">
+        @livewire('product')
     </div>
 @endsection
