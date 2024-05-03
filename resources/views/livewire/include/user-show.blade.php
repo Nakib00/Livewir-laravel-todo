@@ -1,4 +1,8 @@
-<div>
+<div class="divide-gray-200">
+    <div class=" items-center">
+        <h1 class="text-center font-bold">User list</h1>
+    </div>
+
     <table class="min-w-full divide-y divide-gray-200">
         <thead>
             <tr>
@@ -24,12 +28,15 @@
                     <td class="px-6 py-4 whitespace-no-wrap">{{ $user->email }}</td>
                     {{-- show image --}}
                     <td class="px-6 py-4 whitespace-no-wrap">
-                        <img class="w-10 h-10 rounded-full"
-                            src="{{ asset('storage/' . $user->image) }}"
+                        <img class="w-10 h-10 rounded-full" src="{{ asset('storage/' . $user->image) }}"
                             alt="User Image">
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="my-2">
+        <!-- Pagination goes here -->
+        {{ $users->links() }}
+    </div>
 </div>

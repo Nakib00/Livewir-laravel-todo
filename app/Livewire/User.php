@@ -42,7 +42,7 @@ class User extends Component
 
     public function render()
     {
-        $users = Newuser::all();
+        $users = Newuser::latest()->paginate(3);
         return view('livewire.user',compact('users'));
     }
 }

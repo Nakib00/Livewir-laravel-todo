@@ -1,4 +1,7 @@
 <div class="container content py-6 mx-auto">
+    <div class=" items-center">
+        <h1 class="text-center font-bold">Add User</h1>
+    </div>
     <form class="w-full max-w-lg bg-white rounded-lg shadow-md px-8 pt-6 pb-8 mb-4">
         <!-- Profile Picture Upload -->
         <div class="mb-6">
@@ -8,8 +11,7 @@
             <input wire:model='image' type="file" id="profile-picture" name="profile-picture" accept="image/*">
             {{-- Show image --}}
             @if ($image)
-                <img class="rounded-full w-12 h-12 mt-2 block object-cover" src="{{ $image->temporaryUrl() }}"
-                    alt="">
+                <img class="w-20 h-20 rounded m-2" src="{{ $image->temporaryUrl() }}" alt="">
             @endif
 
             <!-- Validation Message -->
