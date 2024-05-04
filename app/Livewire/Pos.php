@@ -49,6 +49,25 @@ class Pos extends Component
         }
     }
 
+    // Method to remove an item from the cart
+        public function removeFromCart($productId)
+    {
+        // Find the index of the item in the cart
+        $index = array_search($productId, array_column($this->cartItems, 'id'));
+
+        // If the item is found, remove it from the cart
+        if ($index !== false) {
+            // Update the total price before unsetting the item
+            $this->totalPrice -= $this->cartItems[$index]['quantity'] * $this->cartItems[$index]['price'];
+
+            unset($this->cartItems[$index]);
+        }
+
+        // Trigger Livewire's render method to update the UI
+        $this->render();
+    }
+
+
 
 
     public function render()
