@@ -67,7 +67,15 @@ class Pos extends Component
         $this->render();
     }
 
-
+    // Method to calculate total price
+    public function calculateTotalPrice()
+    {
+        $total = 0;
+        foreach ($this->cartItems as $item) {
+            $total += $item['quantity'] * $item['price'];
+        }
+        $this->totalPrice = $total;
+    }
 
 
     public function render()
@@ -83,6 +91,9 @@ class Pos extends Component
             $products = Modelsproduct::where('status', 1)->get();
         }
 
+        // Calculate total price
+        $this->calculateTotalPrice();
+    
         return view('livewire.pos',compact('category','products'));
     }
 }

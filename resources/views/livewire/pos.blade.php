@@ -167,61 +167,55 @@
                 </div>
                 <div class="px-4 py-2 flex justify-between items-center">
                     <p class="text-base font-semibold">Grand Total:</p>
-                    <p class="text-base font-semibold">100 TK</p>
+                    <p class="text-base font-semibold">{{ $totalPrice }} TK</p>
                     <!-- Calculate the total dynamically -->
                 </div>
                 {{-- all button --}}
                 <div class="px-4 py-2">
                     <button
                         class="w-full flex items-center justify-center bg-blue-500 text-white py-2 m-2 rounded-md hover:bg-blue-600 transition duration-300">
-                        <svg fill="#ffffff" height="50px" width="50px" version="1.1" id="Capa_1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            viewBox="0 0 236.764 236.764" xml:space="preserve" stroke="#ffffff">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="24px"
+                            width="24px">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
-                                <g>
-                                    <path
-                                        d="M110.035,151.039c0.399,3.858,3.655,6.73,7.451,6.73c0.258,0,0.518-0.013,0.78-0.04c4.12-0.426,7.115-4.111,6.689-8.231 l-3.458-33.468c-0.426-4.121-4.11-7.114-8.231-6.689c-4.12,0.426-7.115,4.111-6.689,8.231L110.035,151.039z">
-                                    </path>
-                                    <path
-                                        d="M156.971,157.729c0.262,0.027,0.522,0.04,0.78,0.04c3.795,0,7.052-2.872,7.451-6.73l3.458-33.468 c0.426-4.121-2.569-7.806-6.689-8.231c-4.121-0.419-7.806,2.569-8.231,6.689l-3.458,33.468 C149.855,153.618,152.85,157.303,156.971,157.729z">
-                                    </path>
-                                    <path
-                                        d="M98.898,190.329c-12.801,0-23.215,10.414-23.215,23.215c0,12.804,10.414,23.221,23.215,23.221 c12.801,0,23.216-10.417,23.216-23.221C122.114,200.743,111.699,190.329,98.898,190.329z M98.898,221.764 c-4.53,0-8.215-3.688-8.215-8.221c0-4.53,3.685-8.215,8.215-8.215c4.53,0,8.216,3.685,8.216,8.215 C107.114,218.076,103.428,221.764,98.898,221.764z">
-                                    </path>
-                                    <path
-                                        d="M176.339,190.329c-12.801,0-23.216,10.414-23.216,23.215c0,12.804,10.415,23.221,23.216,23.221 c12.802,0,23.218-10.417,23.218-23.221C199.557,200.743,189.141,190.329,176.339,190.329z M176.339,221.764 c-4.53,0-8.216-3.688-8.216-8.221c0-4.53,3.686-8.215,8.216-8.215c4.531,0,8.218,3.685,8.218,8.215 C184.557,218.076,180.87,221.764,176.339,221.764z">
-                                    </path>
-                                    <path
-                                        d="M221.201,84.322c-1.42-1.837-3.611-2.913-5.933-2.913H65.773l-6.277-24.141c-0.86-3.305-3.844-5.612-7.259-5.612h-30.74 c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h24.941l6.221,23.922c0.034,0.15,0.073,0.299,0.116,0.446l23.15,89.022 c0.86,3.305,3.844,5.612,7.259,5.612h108.874c3.415,0,6.399-2.307,7.259-5.612l23.211-89.25 C223.111,88.55,222.621,86.158,221.201,84.322z M186.258,170.659H88.982l-19.309-74.25h135.894L186.258,170.659z">
-                                    </path>
-                                    <path
-                                        d="M106.603,39.269l43.925,0.002L139.06,50.74c-2.929,2.929-2.929,7.678,0,10.606c1.464,1.464,3.384,2.197,5.303,2.197 c1.919,0,3.839-0.732,5.303-2.197l24.263-24.263c2.929-2.929,2.929-7.678,0-10.606l-24.28-24.28c-2.929-2.929-7.678-2.929-10.607,0 c-2.929,2.929-2.929,7.678,0,10.607l11.468,11.468l-43.907-0.002h0c-4.142,0-7.5,3.358-7.5,7.5 C99.104,35.911,102.461,39.269,106.603,39.269z">
-                                    </path>
-                                </g>
+                                <path opacity="0.15" d="M20 9H4V18H8V15H16V18H20V9Z" fill="#ffffff"></path>
+                                <path
+                                    d="M16 18V15H8V18M16 18V21H8V18M16 18H20V9H16M8 18H4V9H8M8 9H16M8 9V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V9"
+                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
                             </g>
                         </svg>
-                        Checkout
+                        Print
                     </button>
-
                     <button id="calculatorBtn"
                         class="w-full flex items-center justify-center bg-blue-500 text-white py-2 m-2 rounded-md hover:bg-blue-600 transition duration-300">
-                        <svg fill="#ffffff" height="40px" width="40px" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <title>return</title>
-                                <path
-                                    d="M0 21.984q0.032-0.8 0.608-1.376l4-4q0.448-0.48 1.056-0.576t1.12 0.128 0.864 0.736 0.352 1.12v1.984h18.016q0.8 0 1.408-0.576t0.576-1.408v-8q0-0.832-0.576-1.408t-1.408-0.608h-16q-0.736 0-1.248-0.416t-0.64-0.992 0-1.152 0.64-1.024 1.248-0.416h16q2.464 0 4.224 1.76t1.76 4.256v8q0 2.496-1.76 4.224t-4.224 1.76h-18.016v2.016q0 0.64-0.352 1.152t-0.896 0.704-1.12 0.096-1.024-0.544l-4-4q-0.64-0.608-0.608-1.44z">
-                                </path>
-                            </g>
+                        <svg viewBox="0 0 1024 1024" class="icon" fill="#000000" width="24px" height="24px">
+                            <path
+                                d="M478.104276 337.595469V184.66079L114.48369 442.197642l363.620586 257.597261V548.220967c145.529941 0.060409 280.456525 7.405763 394.534756 210.864063 0.001024-129.244021-21.321388-417.874222-394.534756-421.489561z"
+                                fill="#000000"></path>
+                            <path
+                                d="M447.778841 307.270034V154.334331L84.158254 411.871182 447.778841 669.468444V517.894508c145.529941 0.060409 280.456525 7.405763 394.534756 210.864063 0-129.244021-21.322412-417.874222-394.534756-421.488537z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M283.00269 350.410162a27.283472 57.977507 55.515 1 0 95.578754-65.652623 27.283472 57.977507 55.515 1 0-95.578754 65.652623Z"
+                                fill="#FEFEFE"></path>
+                            <path
+                                d="M224.416795 445.822358a18.189323 31.830547 55.515 1 0 52.474213-36.044304 18.189323 31.830547 55.515 1 0-52.474213 36.044304Z"
+                                fill="#FEFEFE"></path>
                         </svg>
                         Return
                     </button>
-
-
+                    {{-- Button icon style start --}}
+                    <style>
+                        .icon {
+                            width: 24px;
+                            /* Adjust this value as needed */
+                            height: 24px;
+                            /* Adjust this value as needed */
+                        }
+                    </style>
+                    {{-- Button icon style end --}}
                 </div>
             </div>
         </div>
@@ -260,7 +254,7 @@
         </div>
     </div>
 
-
+{{-- js --}}
     <script>
         const calculatorBtn = document.getElementById('calculatorBtn');
         const popupWindow = document.getElementById('popupWindow');
