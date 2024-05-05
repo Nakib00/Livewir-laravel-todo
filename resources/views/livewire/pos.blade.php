@@ -1,12 +1,12 @@
 <div class="bg-gray-100">
     <div class="container mx-auto py-8">
         <div class="flex">
-            <!-- Left Side: Product List -->
+            {{--  <!-- Left Side: Product List -->  --}}
             <div class="w-3/4 pr-4">
                 <div class="flex items-center justify-between mb-4 bg-gray-200 p-4 rounded-lg">
-                    <!-- Heading with additional styles -->
+                    {{--  <!-- Heading with additional styles -->  --}}
                     <h2 class="text-lg font-semibold text-gray-800 border-b-2 border-gray-300 pb-1">Products</h2>
-                    <!-- Category Dropdown -->
+                    {{--  <!-- Category Dropdown -->  --}}
                     <div class="relative">
                         <select wire:model.live="selectedCategory"
                             class="block appearance-none w-40 bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
@@ -16,7 +16,7 @@
                             @endforeach
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                            <!-- SVG icon -->
+                            {{--  <!-- SVG icon -->  --}}
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 text-gray-600">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -44,8 +44,8 @@
                     </div>
                 </div>
                 <div class="overflow-y-auto max-h-screen">
-                    <div class="grid grid-cols-3 gap-4">
-                        <!-- Sample Product Cards -->
+                    <div class="grid grid-cols-5 gap-4">
+                        {{--  <!-- Sample Product Cards -->  --}}
                         @foreach ($products as $product)
                             <div
                                 class="bg-gray-100 p-4 rounded-lg shadow-md flex flex-col items-center justify-between hover:shadow-xl transition duration-300">
@@ -75,92 +75,24 @@
                                 </button>
                             </div>
                         @endforeach
-                        <!-- Repeat this card for each product -->
+                        {{--  <!-- Repeat this card for each product -->  --}}
                     </div>
                 </div>
             </div>
 
 
-            <!-- Right Side: Cart -->
+            {{--  <!-- Right Side: Cart -->  --}}
             <div class="w-1/4 bg-white rounded-lg shadow-md">
                 <h2 class="text-lg font-semibold mb-4 px-4 pt-4 border-b border-gray-200">Cart</h2>
-                <div class="px-4 py-2 max-h-60 overflow-y-auto">
-                    <!-- Sample Cart Items -->
-                    @foreach ($cartItems as $item)
-                        <div class="flex items-center justify-between py-2 border-b border-gray-200">
-                            <div>
-                                <h3 class="text-base font-semibold">{{ $item['name'] }}</h3>
-                                <div class="flex items-center">
-                                    <p class="text-gray-600">Quantity: </p>
-                                    <!-- Decrease Quantity Button -->
-                                    <button wire:click="decreaseQuantity({{ $item['id'] }})"
-                                        class="px-2 text-gray-600 hover:text-gray-900">
-                                        <svg fill="#2ca9bc" viewBox="0 0 24 24" id="decrease-circle"
-                                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                stroke-linejoin="round"></g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <line id="secondary" x1="16.24" y1="12" x2="7.76"
-                                                    y2="12"
-                                                    style="fill: none; stroke: #2ca9bc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </line>
-                                                <circle id="primary" cx="12" cy="12" r="9"
-                                                    style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </circle>
-                                            </g>
-                                        </svg>
-                                    </button>
-
-                                    <!-- Display Quantity -->
-                                    <p class="text-gray-600">{{ $item['quantity'] }}</p>
-                                    <!-- Increase Quantity Button -->
-                                    <button wire:click="increaseQuantity({{ $item['id'] }})"
-                                        class="px-2 text-gray-600 hover:text-gray-900">
-                                        <svg fill="#2ca9bc" viewBox="0 0 24 24" id="increase-circle"
-                                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
-                                            class="h-5 w-5">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                stroke-linejoin="round"></g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path id="secondary" d="M16,12H8m4-4v8"
-                                                    style="fill: none; stroke: #2ca9bc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </path>
-                                                <circle id="primary" cx="12" cy="12" r="9"
-                                                    style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </circle>
-                                            </g>
-                                        </svg>
-                                    </button>
-
-                                </div>
-                                <p class="text-gray-600">Unit Price: {{ $item['price'] }} TK</p>
-                                <p class="text-gray-600">Total Price: {{ $item['quantity'] * $item['price'] }} TK</p>
-                            </div>
-                            <button wire:click="removeFromCart({{ $item['id'] }})"
-                                class="text-red-500 hover:text-red-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                    @endforeach
-
-                    <!-- Repeat this for each item in the cart -->
-                </div>
-
-                <!-- Discount Input Field -->
+                {{--  <!-- Discount Input Field -->  --}}
                 <div class="px-4 py-2 flex items-center justify-between">
                     <input type="text"
                         class="w-2/3 bg-gray-100 border border-gray-200 px-3 py-1 rounded-md focus:outline-none focus:ring-2 m-2 focus:ring-blue-500"
                         placeholder="Enter discount code">
-                    <button
-                        class="w-1/3 bg-blue-500 text-white py-1 rounded-md hover:bg-blue-600 transition duration-300">Apply</button>
+                        <button class="w-1/3 py-1 rounded-md hover:bg-blue-600 transition duration-300"
+                        style="background-color: #344e41; color: white;">Apply</button>
                 </div>
-                <!-- Radio Buttons for Official Discounts -->
+                {{--  <!-- Radio Buttons for Official Discounts -->  --}}
                 <div class="px-4 py-2 flex justify-between items-center">
                     <p class="text-base font-semibold">Official Discount:</p>
                     <div class="flex items-center space-x-4">
@@ -230,6 +162,76 @@
                         }
                     </style>
                     {{-- Button icon style end --}}
+                </div>
+                <div class="px-4 py-2 max-h-60 ">
+                    {{--  <!-- Sample Cart Items -->  --}}
+                    @foreach ($cartItems as $item)
+                        <div class="flex items-center justify-between py-2 border-b border-gray-200">
+                            <div>
+                                <h3 class="text-base font-semibold">{{ $item['name'] }}</h3>
+                                <div class="flex items-center">
+                                    <p class="text-gray-600">Quantity: </p>
+                                    {{--  <!-- Decrease Quantity Button -->  --}}
+                                    <button wire:click="decreaseQuantity({{ $item['id'] }})"
+                                        class="px-2 text-gray-600 hover:text-gray-900">
+                                        <svg fill="#2ca9bc" viewBox="0 0 24 24" id="decrease-circle"
+                                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <line id="secondary" x1="16.24" y1="12" x2="7.76"
+                                                    y2="12"
+                                                    style="fill: none; stroke: #2ca9bc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </line>
+                                                <circle id="primary" cx="12" cy="12" r="9"
+                                                    style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </circle>
+                                            </g>
+                                        </svg>
+                                    </button>
+
+                                    {{--  <!-- Display Quantity -->  --}}
+                                    <p class="text-gray-600">{{ $item['quantity'] }}</p>
+                                    {{--  <!-- Increase Quantity Button -->  --}}
+                                    <button wire:click="increaseQuantity({{ $item['id'] }})"
+                                        class="px-2 text-gray-600 hover:text-gray-900">
+                                        <svg fill="#2ca9bc" viewBox="0 0 24 24" id="increase-circle"
+                                            data-name="Line Color" xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="secondary" d="M16,12H8m4-4v8"
+                                                    style="fill: none; stroke: #2ca9bc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </path>
+                                                <circle id="primary" cx="12" cy="12" r="9"
+                                                    style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </circle>
+                                            </g>
+                                        </svg>
+                                    </button>
+
+                                </div>
+                                <p class="text-gray-600">Total Price: {{ $item['quantity'] * $item['price'] }} TK</p>
+                            </div>
+                            {{--  <!-- Product Image -->  --}}
+                            <img src="{{ asset('storage/' . $item['image']) }}" alt="{{ $item['name'] }}"
+                                class="w-16 h-16 rounded-full ml-4">
+                            <button wire:click="removeFromCart({{ $item['id'] }})"
+                                class="text-red-500 hover:text-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    @endforeach
+
+                    {{--  <!-- Repeat this for each item in the cart -->  --}}
                 </div>
             </div>
         </div>

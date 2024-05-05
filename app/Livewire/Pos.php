@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire;
+
 use App\Models\category as ModelsCategory;
 use App\Models\product as Modelsproduct;
 use Livewire\Component;
@@ -12,7 +13,7 @@ class Pos extends Component
     public $cartItems = [];
     public $totalPrice = 0;
 
-        public function addToCart($productId)
+    public function addToCart($productId)
     {
         // Check if the product already exists in the cart
         $index = array_search($productId, array_column($this->cartItems, 'id'));
@@ -27,7 +28,8 @@ class Pos extends Component
                 'id' => $productId,
                 'quantity' => 1,
                 'name' => $product->name,
-                'price' => $product->price // Add price to the cart item
+                'price' => $product->price,
+                'image' => $product->image
             ];
         }
     }
@@ -50,7 +52,7 @@ class Pos extends Component
     }
 
     // Method to remove an item from the cart
-        public function removeFromCart($productId)
+    public function removeFromCart($productId)
     {
         // Find the index of the item in the cart
         $index = array_search($productId, array_column($this->cartItems, 'id'));
@@ -93,7 +95,7 @@ class Pos extends Component
 
         // Calculate total price
         $this->calculateTotalPrice();
-    
-        return view('livewire.pos',compact('category','products'));
+
+        return view('livewire.pos', compact('category', 'products'));
     }
 }
