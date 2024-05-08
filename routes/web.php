@@ -20,3 +20,7 @@ Route::get('/todoapp', function () {
 Route::get('/user', function () {
     return view('user');
 })->name('user');
+
+Route::get('/order', function () {
+    return view('order');
+})->name('order');
