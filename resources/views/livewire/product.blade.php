@@ -72,7 +72,7 @@
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="category">
                     <option value="">Select Category</option>
-                    @foreach ($category as $category)
+                    @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -108,9 +108,6 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cetagory
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
@@ -158,14 +155,6 @@
                                 @enderror
                             @else
                                 {{ $product->quantity }}
-                            @endif
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if ($product->category)
-                                {{ $product->category->name }}
-                            @else
-                                No Category
                             @endif
                         </td>
 

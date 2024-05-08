@@ -79,23 +79,75 @@ class Pos extends Component
         $this->totalPrice = $total;
     }
 
+    // Order save
+    public function saveOrder(){
 
-    public function render()
-    {
-        $category = ModelsCategory::where('status', 1)->get();
+        // Check if the cart is empty
+    if (empty($this->cartItems)) {
+        // If the cart is empty, display an alert
+        session()->flash('error', 'Cannot print. Cart is empty!');
+        return;
+    }
 
-        // Fetch products using raw SQL query
-        $products = [];
-        if ($this->selectedCategory) {
-            $products = DB::select("SELECT * FROM products WHERE category_id = :category_id AND status = 1", ['category_id' => $this->selectedCategory]);
-        } else {
-            // If no category is selected, fetch all active products
-            $products = Modelsproduct::where('status', 1)->get();
+        // First, create a new order record
+        $order = DB::table('orders')->insertGetId([
+            'order_id' => uniqid(), // Generate a unique order ID
+            'total_amount' => $this->totalPrice,
+            'status' => 'pending', // You can set the initial status as 'pending'
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Next, loop through the cart items and insert them into the order_items table
+        foreach ($this->cartItems as $item) {
+            DB::table('order_items')->insert([
+                'order_id' => $order,
+                'product_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price']*$item['quantity'],
+                'created_at' => now(),
+            ]);
         }
 
-        // Calculate total price
-        $this->calculateTotalPrice();
+        // Clear the cart after saving the order
+        $this->cartItems = [];
 
-        return view('livewire.pos', compact('category', 'products'));
+        // Optionally, you can redirect the user to a confirmation page or display a success message
+        session()->flash('success', 'Order saved successfully!');
     }
+
+
+    public function render()
+{
+    $category = DB::select("
+        SELECT *
+        FROM categories
+        WHERE status = 1
+    ");
+
+    // Fetch products using raw SQL query
+    $products = [];
+    if ($this->selectedCategory) {
+        $products = DB::select("
+            SELECT products.*, categories.name AS category_name
+            FROM products
+            INNER JOIN categories ON products.category_id = categories.id
+            WHERE products.category_id = :category_id AND products.status = 1
+        ", ['category_id' => $this->selectedCategory]);
+    } else {
+        // If no category is selected, fetch all active products along with their category name
+        $products = DB::select("
+            SELECT products.*, categories.name AS category_name
+            FROM products
+            INNER JOIN categories ON products.category_id = categories.id
+            WHERE products.status = 1
+        ");
+    }
+
+    // Calculate total price
+    $this->calculateTotalPrice();
+
+    return view('livewire.pos', compact('category', 'products'));
+}
+
 }

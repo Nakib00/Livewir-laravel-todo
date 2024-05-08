@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\category as ModelsCategory;
 use App\Models\product as Modelsproduct;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Component
 {
@@ -24,7 +25,8 @@ class Product extends Component
     public $editquantity;
     public $editcategory_id;
 
-    public function create(){
+    public function create()
+    {
         // Validate the input fields
         $validatedData = $this->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -34,69 +36,119 @@ class Product extends Component
             'category_id' => ['required'],
         ]);
 
-         // Upload the image and store its path
-        $imagePath = $this->image->store('upload/product', 'public');
+        try {
+            // Upload the image and store its path
+            $imagePath = $this->image->store('upload/product', 'public');
 
-        // Create the product with the validated data
-        Modelsproduct::create([
-            'name' => $validatedData['name'],
-            'image' => $imagePath,
-            'price' => $validatedData['price'],
-            'quantity' => $validatedData['quantity'],
-            'category_id' => $validatedData['category_id'],
-        ]);
+            // Execute raw SQL query to create the product
+            DB::insert('INSERT INTO products (name, image, price, quantity, category_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+                $validatedData['name'],
+                $imagePath,
+                $validatedData['price'],
+                $validatedData['quantity'],
+                $validatedData['category_id'],
+                now(), // current timestamp for created_at
+                now(), // current timestamp for updated_at
+            ]);
 
-         // Clear the input fields
-        $this->reset(['name', 'image', 'price', 'quantity', 'category_id']);
+            // Clear the input fields
+            $this->reset(['name', 'image', 'price', 'quantity', 'category_id']);
 
-         // Show a success message
-        session()->flash('success', 'Product created successfully.');
+            // Show a success message
+            session()->flash('success', 'Product created successfully.');
+        } catch (\Exception $e) {
+            // Handle exception if any
+            session()->flash('error', 'Failed to create product: ' . $e->getMessage());
+        }
     }
 
-    public function delete($itemId){
-        $item = Modelsproduct::findOrFail($itemId);
-        $item->delete();
+    public function delete($itemId)
+    {
+        try {
+            // Execute raw SQL query to delete the product
+            DB::delete('DELETE FROM products WHERE id = ?', [$itemId]);
 
-        session()->flash('success', 'Product deleted successfully.');
+            // Show success message
+            session()->flash('success', 'Product deleted successfully.');
+        } catch (\Exception $e) {
+            // Handle exception if any
+            session()->flash('error', 'Failed to delete product: ' . $e->getMessage());
+        }
     }
 
     public function toggleStatus($productId)
     {
-        $product = Modelsproduct::findOrFail($productId);
-        $product->status = !$product->status;
-        $product->save();
+        try {
+            // Fetch the product's current status
+            $currentStatus = DB::selectOne('SELECT status FROM products WHERE id = ?', [$productId])->status;
+
+            // Toggle the status
+            $newStatus = !$currentStatus;
+
+            // Update the status using raw SQL query
+            DB::update('UPDATE products SET status = ?, updated_at = ? WHERE id = ?', [
+                $newStatus,
+                now(), // current timestamp for updated_at
+                $productId
+            ]);
+
+            // Show success message
+            session()->flash('success', 'Product status toggled successfully.');
+        } catch (\Exception $e) {
+            // Handle exception if any
+            session()->flash('error', 'Failed to toggle product status: ' . $e->getMessage());
+        }
     }
 
     public function edit($itemId)
     {
-        $item = Modelsproduct::findOrFail($itemId);
-        $this->editid= $item->id;
-        $this->editname = $item->name;
-        $this->editprice = $item->price;
-        $this->editquantity = $item->quantity;
+        try {
+            // Fetch the product using raw SQL query
+            $item = DB::selectOne('SELECT * FROM products WHERE id = ?', [$itemId]);
 
+            if (!$item) {
+                throw new \Exception("Product not found");
+            }
+
+            // Set the product data
+            $this->editid = $item->id;
+            $this->editname = $item->name;
+            $this->editprice = $item->price;
+            $this->editquantity = $item->quantity;
+        } catch (\Exception $e) {
+            // Handle exception if any
+            session()->flash('error', $e->getMessage());
+        }
     }
 
-    public function update(){
+    public function update()
+    {
+        // Validate input
         $validatedData = $this->validate([
             'editname' => ['required', 'string', 'min:3', 'max:255'],
-            'editprice'=>['required', 'numeric', 'min:0'],
-            'editquantity'=>['required', 'numeric', 'min:0']
+            'editprice' => ['required', 'numeric', 'min:0'],
+            'editquantity' => ['required', 'numeric', 'min:0']
         ]);
 
-        // Find the product
-        $product = Modelsproduct::findOrFail($this->editid);
+        try {
+            // Execute raw SQL query to update the product
+            DB::update('UPDATE products SET name = ?, price = ?, quantity = ?, updated_at = ? WHERE id = ?', [
+                $validatedData['editname'],
+                $validatedData['editprice'],
+                $validatedData['editquantity'],
+                now(), // current timestamp for updated_at
+                $this->editid
+            ]);
 
-        // Update the product with validated data
-        $product->update([
-            'name' => $validatedData['editname'],
-            'price' => $validatedData['editprice'],
-            'quantity' => $validatedData['editquantity'],
-        ]);
+            // Show success message
+            session()->flash('success', 'Product updated successfully.');
 
-        // Show success message
-        session()->flash('success', 'Product updated successfully.');
-        $this->cancelEdit();
+            // Reset editing state
+            $this->cancelEdit();
+        } catch (\Exception $e) {
+            // Handle exception if any
+            session()->flash('error', 'Failed to update product: ' . $e->getMessage());
+        }
     }
 
     public function cancelEdit()
@@ -107,10 +159,17 @@ class Product extends Component
 
     public function render()
     {
-        $category = ModelsCategory::where('status', 1)->get();
+        // Fetch active categories
+        $categories = DB::table('categories')->where('status', 1)->get();
 
-        $products = Modelsproduct::with('category')->get();
+        // Fetch products along with their categories where the category status is active
+        $products = DB::table('products')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->where('categories.status', 1)
+        ->select('products.*', 'categories.name as category_name')
+        ->get();
 
-        return view('livewire.product',compact('category','products'));
+
+        return view('livewire.product', compact('categories', 'products'));
     }
 }

@@ -1,4 +1,7 @@
 <div class="bg-gray-100">
+    {{-- include alirt --}}
+    @include('livewire.include.alirt')
+
     <div class="container mx-auto py-8">
         <div class="flex">
             {{--  <!-- Left Side: Product List -->  --}}
@@ -89,7 +92,7 @@
                     <input type="text"
                         class="w-2/3 bg-gray-100 border border-gray-200 px-3 py-1 rounded-md focus:outline-none focus:ring-2 m-2 focus:ring-blue-500"
                         placeholder="Enter discount code">
-                        <button class="w-1/3 py-1 rounded-md hover:bg-blue-600 transition duration-300"
+                    <button class="w-1/3 py-1 rounded-md hover:bg-blue-600 transition duration-300"
                         style="background-color: #344e41; color: white;">Apply</button>
                 </div>
                 {{--  <!-- Radio Buttons for Official Discounts -->  --}}
@@ -116,7 +119,7 @@
                 {{-- all button --}}
                 <div class="px-4 py-2">
                     {{-- Print button --}}
-                    <button
+                    <button onclick="if (confirm('Are you sure you want to print?')) { @this.call('saveOrder') }"
                         class="w-full flex items-center justify-center bg-green-600 text-white py-2 m-2 rounded-md hover:bg-green-700 transition duration-300">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="24px"
                             width="24px">
@@ -132,6 +135,7 @@
                         </svg>
                         Print
                     </button>
+
                     {{-- Return calculator --}}
                     <button id="calculatorBtn"
                         class="w-full flex items-center justify-center bg-indigo-700 text-white py-2 m-2 rounded-md hover:bg-indigo-800 transition duration-300">
